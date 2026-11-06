@@ -1,0 +1,191 @@
+name: MP GPS M2
+nodes:
+  - id: 610d3881-427e-489c-959d-0f8379147cad
+    position:
+      x: 128
+      y: 28
+    block:
+      name: Modulo LC29H-BA
+      function: Dual band (L1+L5) high precision GNSS with RTK and DR functions
+      model: LC29H (BA)
+      properties:
+        Supply Voltage: 3.1–3.6 V (Typ. 3.3 V)
+        urls:
+          - Datasheet: https://www.quectel.com/download_file/47693
+      ports:
+        - id: uart
+          label: UART
+          protocol: UART
+          direction: bidirectional
+          maxConnections: 1
+          color: "#0000FF"
+        - id: power_3V3
+          label: 3V3
+          protocol: POWER
+          direction: in
+          maxConnections: 1
+          color: "#FF0000"
+        - id: ant
+          label: Ant
+          protocol: COAX
+          direction: bidirectional
+          maxConnections: 3
+          color: "#a658ca"
+      category: controladores
+      subcategory: modulos
+      image: /api/images/040a19dc-6181-4551-96d5-30f32d63e48e/content
+      color: "#a658ca"
+    libraryId: dbc42967-e701-4808-8472-9045d10a8599
+    libraryVersion: 4
+  - id: f0784beb-ce99-4363-b5e6-533dd08cb7bc
+    position:
+      x: -583.7773647029342
+      y: 118.1260038272597
+    block:
+      name: conector M.2 B
+      function: Conector M.2B
+      model: ""
+      properties:
+        notes: Conector disponible en la control screen 5"
+      ports:
+        - id: i2c
+          label: I²C_3V3
+          protocol: I2C
+          direction: bidirectional
+          maxConnections: 1
+        - id: uart
+          label: UART_3V3
+          protocol: UART
+          direction: bidirectional
+          maxConnections: 1
+        - id: power_3V6
+          label: 3V6
+          protocol: POWER
+          direction: out
+          maxConnections: 3
+        - id: GPIO_3V3
+          label: RST_LTE_3V3
+          protocol: GPIO
+          direction: bidirectional
+          maxConnections: 1
+        - id: GPIO_3V3_2
+          label: LTE_GPIO_3V3
+          protocol: GPIO
+          direction: bidirectional
+          maxConnections: 1
+      category: controladores
+    libraryId: 2f15ac35-60c8-4d95-8f6c-efc36cd451c6
+    libraryVersion: 1
+  - id: 2e5ab49a-1620-490e-875d-ebfc83dc2cbf
+    position:
+      x: 567
+      y: 94
+    block:
+      name: conector U.FL
+      function: U.FL
+      model: ""
+      properties: {}
+      ports:
+        - id: coax
+          label: Ant
+          protocol: COAX
+          direction: bidirectional
+          maxConnections: 2
+      category: conectores
+      image: /api/images/d565e3fc-f8e8-44a5-a59a-60f7162da712/content
+      color: "#78a7e8"
+    libraryId: bb40cf64-91ad-4c3a-9d57-9aa499aafaca
+    libraryVersion: 1
+  - id: f1e2a957-a781-4a04-b85c-2125aae437dc
+    position:
+      x: 131
+      y: 297
+    block:
+      name: Power Antena
+      function: Alimentacion antena activa
+      model: MAX16946
+      properties:
+        I: 500mA (max)
+        urls:
+          - Datasheet: https://www.mouser.pe/datasheet/2/256/MAX16946-MAX16947-1265166.pdf
+      ports:
+        - id: power_0
+          label: Power Ant
+          protocol: COAX
+          direction: out
+          maxConnections: 1
+          color: "#d16a32"
+        - id: power_1
+          label: Power in
+          protocol: POWER
+          direction: in
+          maxConnections: 1
+          color: "#c22b62"
+      category: alimentacion
+    libraryId: d3eed110-e049-4b47-97b0-8edcb2ce7f8b
+    libraryVersion: 5
+  - id: 1e5573fe-4b0c-4038-9a5f-63f7c4a0b1f0
+    position:
+      x: -206.42822034394644
+      y: 170.49203615614482
+    block:
+      name: Fuente de alimentación
+      function: Proveer energía
+      model: ""
+      category: alimentacion
+      subcategory: fuentes
+      properties:
+        voltage: 3.3 V
+        notes: considerar un diodo para esta parte
+      ports:
+        - id: power_0
+          label: 3V6
+          protocol: POWER
+          direction: in
+          maxConnections: 1
+          color: "#c22b62"
+        - id: power_1
+          label: 3V3
+          protocol: POWER
+          direction: out
+          color: "#FF0000"
+          maxConnections: 3
+    libraryId: 4065e2b6-2440-4946-843f-28fa21478d1a
+    libraryVersion: 4
+edges:
+  - id: f7008e88-7357-40c3-b55f-bbd794f7211b
+    source: f0784beb-ce99-4363-b5e6-533dd08cb7bc
+    target: 610d3881-427e-489c-959d-0f8379147cad
+    sourcePort: uart
+    targetPort: uart
+    route:
+      x: -284
+      y: 136
+  - id: 21bdb543-3927-4fd2-9e9b-0aa0e3244eb9
+    source: 610d3881-427e-489c-959d-0f8379147cad
+    target: 2e5ab49a-1620-490e-875d-ebfc83dc2cbf
+    sourcePort: ant
+    targetPort: coax
+  - id: 82908b7c-cccc-445f-b7d1-625947611dd4
+    source: f0784beb-ce99-4363-b5e6-533dd08cb7bc
+    target: f1e2a957-a781-4a04-b85c-2125aae437dc
+    sourcePort: power_3V6
+    targetPort: power_1
+    route:
+      x: -312
+      y: 438
+  - id: 91b124a2-c95c-4649-a466-883d94ffc729
+    source: f1e2a957-a781-4a04-b85c-2125aae437dc
+    target: 2e5ab49a-1620-490e-875d-ebfc83dc2cbf
+    sourcePort: power_0
+    targetPort: coax
+  - id: 47211e40-c706-4f0d-afc3-38b84b324299
+    source: f0784beb-ce99-4363-b5e6-533dd08cb7bc
+    target: 1e5573fe-4b0c-4038-9a5f-63f7c4a0b1f0
+    sourcePort: power_3V6
+    targetPort: power_0
+  - id: 87050313-684a-4763-bbf6-57deb5786f4f
+    source: 1e5573fe-4b0c-4038-9a5f-63f7c4a0b1f0
+    target: 610d3881-427e-489c-959d-0f8379147cad
+    sourcePort: power_1
+    targetPort: power_3V3
